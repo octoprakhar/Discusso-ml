@@ -1,0 +1,45 @@
+# =========================
+# Conda / Python
+# =========================
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+
+# =========================
+# FastAPI / ML artifacts
+# =========================
+*.log
+*.sqlite3
+models/
+checkpoints/
+data/
+outputs/
+
+# =========================
+# Node / Next.js
+# =========================
+node_modules/
+.next/
+out/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# =========================
+# Misc
+# =========================
+coverage/
