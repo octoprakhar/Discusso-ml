@@ -11,5 +11,6 @@ def update_post_tags(post_id: str, tags: list[str]):
 
 def update_post_tag_error(post_id: str, error: str):
     supabase.table("Post").update({
+        "tag":None,
         "tag_error": error
     }).eq("id",post_id).execute()

@@ -16,15 +16,22 @@ def process_tagging(payload: TagRequest):
             description=payload.description
         )
 
-        tags = generate_tags(post_input)
-        logger.info(f"Got tags as: {tags}")
+        result = generate_tags(post_input)
+        tags = result["tags"]
+        error = result["error"]
 
-        update_post_tags(payload.post_id, tags=tags)
-        logger.info("Successfully added tags")
+        logger.info(f"Tagging result: tags={tags}, error={error}")
+
+        if error:
+            update_post_tag_error(payload.post_id, error)
+            logger.info("Stored tag error")
+        else:
+            update_post_tags(payload.post_id, tags)
+            logger.info("Successfully added tags")
 
     except Exception as e:
         logger.error(f"Tagging failed: {e}")
-        update_post_tag_error(payload.post_id, str(e))
+        update_post_tag_error(payload.post_id, "internal_error")
 
 
 @router.get("/health")
@@ -42,9 +49,11 @@ def generate_tags_endpoint(
     logger.info("Received tag generation request")
 
     try:
-        tags = generate_tags(payload)
+        data = generate_tags(payload)
+        tags = data["tags"]
+        error = data["error"]
         logger.info(f"Logger generated tag as: {tags}")
-        return TagResponse(tags=tags)
+        return TagResponse(tags=tags,error=error)
     except Exception as e:
         logger.error(f"Tag generation failed: {e}")
         raise HTTPException(status_code=500, detail="Tag generation failed")
