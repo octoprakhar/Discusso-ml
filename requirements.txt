@@ -5,3 +5,8 @@ pydantic-settings
 supabase
 sentence-transformers
 scikit-learn
+pandas
+matplotlib
+seaborn
+scipy
+ipykernel
