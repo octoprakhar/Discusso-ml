@@ -2,8 +2,8 @@ import os
 import json
 import pandas as pd
 
-from ml.entity.post_quality_feature.ingestion_config_entity import DataIngestionConfig
-from ml.entity.post_quality_feature.ingestion_artifact_entity import DataIngestionArtifact
+from ml.entity.post_quality_feature.config_entity import DataIngestionConfig
+from ml.entity.post_quality_feature.artifact_entity import DataIngestionArtifact
 
 class DataIngestion:
     def __init__(self,config: DataIngestionConfig):

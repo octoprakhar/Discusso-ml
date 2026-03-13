@@ -18,6 +18,7 @@ models/
 checkpoints/
 data/
 outputs/
+artifacts/
 
 # =========================
 # Node / Next.js
