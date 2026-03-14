@@ -34,3 +34,9 @@ class OpennessDataTransformationArtifact:
 class DataTransformationArtifact:
     effortDataTransformationArtifact: EffortDataTransformationArtifact
     opennessDataTransformationArtifact: OpennessDataTransformationArtifact
+
+@dataclass
+class ModelTrainerArtifact:
+
+    effort_model_path: str
+    openness_model_path: str

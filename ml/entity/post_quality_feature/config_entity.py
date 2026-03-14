@@ -40,3 +40,14 @@ class DataTransformationConfig:
 
     tfidf_max_features: int = 3000
     tfidf_min_df: int = 5
+
+
+@dataclass
+class ModelTrainerConfig:
+    model_artifact_dir: str
+
+    effort_model_path: str
+    openness_model_path: str
+
+    effort_model_params: dict
+    openness_model_params: dict
