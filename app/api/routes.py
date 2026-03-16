@@ -4,8 +4,9 @@ from app.core.security import verify_internet_secret
 from app.services.tagger import generate_tags
 from app.services.tag_writer import update_post_tag_error,update_post_tags
 from app.utils.logger import logger
-from app.models.schemas import TagRequest,PostInput
-
+from app.models.schemas import TagRequest,PostInput,PostRequest
+from ml.pipelines.post_quality_feature.inference_pipeline import InferencePipeline
+from ml.config.post_quality_feature.configuration import ConfigurationManager
 
 router = APIRouter()
 
@@ -66,3 +67,14 @@ async def tag_post(payload: TagRequest, background_tasks: BackgroundTasks):
     requestData = TagRequest(post_id=payload.post_id,title=payload.title, description=payload.description)
     background_tasks.add_task(process_tagging, requestData)
     return {"status": "accepted"}
+
+
+## Getting post quality
+@router.post("/post-quality")
+def check_post_quality(request: PostRequest):
+    configs = ConfigurationManager()
+    inference = InferencePipeline(config=configs.get_inference_config())
+
+    result = inference.predict(request.title,request.body)
+
+    return {"status":200,"result":result}

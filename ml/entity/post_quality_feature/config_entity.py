@@ -61,3 +61,20 @@ class ModelEvaluationConfig:
 
     effort_errors_path: str
     openness_errors_path: str
+
+@dataclass
+class EffortInferenceConfig:
+    tfidf_path:str
+    scaler_path: str
+    embedding_model_name: str = "all-MiniLM-L6-v2"
+
+@dataclass
+class OpennessInferenceConfig:
+    embedding_model_name: str = "all-MiniLM-L6-v2"
+
+@dataclass
+class InferenceConfig:
+    effortInferenceConfig:EffortInferenceConfig
+    opennessInferenceConfig:OpennessInferenceConfig
+    effort_model_path:str
+    openness_model_path: str

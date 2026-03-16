@@ -10,3 +10,5 @@ app = FastAPI(
 )
 
 app.include_router(router=router)
+
+## uvicorn app.main:app --reload

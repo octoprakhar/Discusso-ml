@@ -68,6 +68,17 @@ class ModelEvaluation:
 
         errors = errors[errors.true_label != errors.predicted_label]
 
+        original_df = pd.read_csv(
+        self.transformation_artifact.effortDataTransformationArtifact.original_test_data_path
+        )
+
+        wrong_idx = errors.index
+
+        error_posts = original_df.iloc[wrong_idx].copy()
+
+        error_posts["true_label"] = y_test[wrong_idx]
+        error_posts["predicted_label"] = y_pred[wrong_idx]
+
         return metrics, errors
     
     def save_results(self, effort_metrics, effort_errors, openness_metrics, openness_errors):
