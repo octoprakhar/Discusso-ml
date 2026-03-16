@@ -51,3 +51,13 @@ class ModelTrainerConfig:
 
     effort_model_params: dict
     openness_model_params: dict
+
+@dataclass
+class ModelEvaluationConfig:
+    evaluation_artifact_dir: str
+
+    effort_metrics_path: str
+    openness_metrics_path: str
+
+    effort_errors_path: str
+    openness_errors_path: str

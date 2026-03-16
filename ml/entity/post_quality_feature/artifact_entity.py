@@ -40,3 +40,11 @@ class ModelTrainerArtifact:
 
     effort_model_path: str
     openness_model_path: str
+
+@dataclass
+class ModelEvaluationArtifact:
+    effort_metrics_path: str
+    openness_metrics_path: str
+
+    effort_errors_path: str
+    openness_errors_path: str
