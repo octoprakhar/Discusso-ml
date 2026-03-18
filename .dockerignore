@@ -1,0 +1,23 @@
+# General ignores
+venv/
+.git
+.gitignore
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Exclude training and heavy data
+notebooks/
+tests/
+data/
+evaluation/
+
+# Exclude specific ML training components
+ml/components/
+ml/artifacts/evaluation/
+ml/artifacts/ingestion/
+ml/artifacts/validation/
+
+# Exclude large .npy files but keep the .pkl models
+ml/artifacts/transformation/effort/*.npy
+ml/artifacts/transformation/openness/*.npy

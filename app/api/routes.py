@@ -1,10 +1,13 @@
 from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
+
 from app.models.schemas import PostInput, TagResponse
 from app.core.security import verify_internet_secret
 from app.services.tagger import generate_tags
 from app.services.tag_writer import update_post_tag_error,update_post_tags
+from app.services.quality_estimator import update_post_score
 from app.utils.logger import logger
 from app.models.schemas import TagRequest,PostInput,PostRequest
+
 from ml.pipelines.post_quality_feature.inference_pipeline import InferencePipeline
 from ml.config.post_quality_feature.configuration import ConfigurationManager
 
@@ -70,11 +73,29 @@ async def tag_post(payload: TagRequest, background_tasks: BackgroundTasks):
 
 
 ## Getting post quality
-@router.post("/post-quality")
+@router.post("/post-quality", dependencies=[Depends(verify_internet_secret)])
 def check_post_quality(request: PostRequest):
-    configs = ConfigurationManager()
-    inference = InferencePipeline(config=configs.get_inference_config())
+    try:
+        configs = ConfigurationManager()
+        inference = InferencePipeline(config=configs.get_inference_config())
 
-    result = inference.predict(request.title,request.body)
+        result = inference.predict(request.title,request.body)
 
-    return {"status":200,"result":result}
+        post_quality = result["score"]
+
+        logger.info(f"Post quality result: {result}")
+
+        # Update database score
+        update_post_score(
+            post_id=request.postId,
+            post_quality=post_quality,
+            karma=request.karma
+        )
+
+        return {"status":200,"result":result}
+    
+    except Exception as e:
+        logger.error(f"Post quality inference failed: {e}")
+        raise HTTPException(status_code=500, detail = "Post quality failed")
+
+    
