@@ -14,11 +14,10 @@ __pycache__/
 # =========================
 *.log
 *.sqlite3
-models/
 checkpoints/
 data/
 outputs/
-artifacts/
+ml/artifacts/
 
 # =========================
 # Node / Next.js
