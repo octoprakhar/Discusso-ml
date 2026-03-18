@@ -1,0 +1,21 @@
+{
+    "dataset_size_before": 240,
+    "dataset_size_after": 240,
+    "missing_column_check": {
+        "error": false,
+        "msg": "All required columns are present."
+    },
+    "important_columns_empty_check": {
+        "error": false,
+        "msg": "No invalid rows detected in important columns."
+    },
+    "null_handling": {
+        "error": false,
+        "msg": "Null values handled for text columns."
+    },
+    "label_validation": {
+        "error": false,
+        "msg": "All labels are valid."
+    },
+    "validation_status": true
+}

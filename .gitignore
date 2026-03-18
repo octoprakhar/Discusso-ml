@@ -16,7 +16,24 @@ __pycache__/
 *.sqlite3
 checkpoints/
 outputs/
-ml/artifacts/
+
+# --- ML Artifacts ---
+# Ignore the evaluation folder completely
+ml/artifacts/evaluation/
+
+# Ignore heavy data files everywhere
+*.npy
+*.csv
+*.h5
+
+# Ensure we keep the directory structure for artifacts
+!ml/artifacts/
+!ml/artifacts/**/
+
+# Specifically allow .pkl files
+!*.pkl
+# 3. But UN-IGNORE the .pkl files
+
 /data/
 # =========================
 # Node / Next.js
