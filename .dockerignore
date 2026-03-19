@@ -9,6 +9,7 @@ __pycache__/
 # Exclude training and heavy data
 notebooks/
 tests/
+tests_training_pipelines/
 data/
 evaluation/
 

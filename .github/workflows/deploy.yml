@@ -1,4 +1,4 @@
-name: Build and Push to Docker Hub
+name: CI/CD Pipeline
 
 ## We need to tell when it will run
 on:
@@ -6,7 +6,27 @@ on:
         branches: ["main"] ## Everytime I push to main branch
 
 jobs:
+    test-backend:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.12'
+        
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+
+        - name: Run Pytest
+          run: pytest
+
     build-and-push:
+        needs: test-backend
         runs-on: ubuntu-latest
     
         steps:
