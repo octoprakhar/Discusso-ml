@@ -38,7 +38,8 @@ jobs:
           if: always()
           uses: MishaKav/pytest-coverage-comment@v1.1.53
           with:
-            pytest-coverage-path: ./coverage.xml
+            pytest-coverage-path: ./pytest-coverage.txt
+            pytest-xml-coverage-path: ./coverage.xml
             github-token: ${{secrets.GITHUB_TOKEN}}
 
     build-and-push:
