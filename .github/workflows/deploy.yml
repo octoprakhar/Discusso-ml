@@ -26,7 +26,7 @@ jobs:
           env:
             SUPABASE_URL: "https://fake.supabase.co"
             SUPABASE_SERVICE_ROLE_KEY: "fake_key"
-            ML_INTERNAL_SECRET: "fake_secret"
+            ML_INTERNAL_SECRET: ${{secrets.ML_INTERNAL_SECRET}}
           run: pytest
 
     build-and-push:

@@ -11,4 +11,5 @@ seaborn
 scipy
 ipykernel
 pytest
+pytest-mock
 httpx
