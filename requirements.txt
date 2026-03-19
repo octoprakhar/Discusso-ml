@@ -12,4 +12,5 @@ scipy
 ipykernel
 pytest
 pytest-mock
+pytest-cov
 httpx

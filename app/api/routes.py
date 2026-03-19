@@ -44,25 +44,6 @@ def health():
 
 
 
-# Just for testing of ml model purposes
-@router.post("/generate-tags", response_model=TagResponse, dependencies=[Depends(verify_internet_secret)])
-def generate_tags_endpoint(
-    payload : PostInput,
-    background_tasks: BackgroundTasks
-):
-    logger.info("Received tag generation request")
-
-    try:
-        data = generate_tags(payload)
-        tags = data["tags"]
-        error = data["error"]
-        logger.info(f"Logger generated tag as: {tags}")
-        return TagResponse(tags=tags,error=error)
-    except Exception as e:
-        logger.error(f"Tag generation failed: {e}")
-        raise HTTPException(status_code=500, detail="Tag generation failed")
-    
-
 # Trigger async tag generation + DB update
 @router.post("/tag", dependencies=[Depends(verify_internet_secret)])
 async def tag_post(payload: TagRequest, background_tasks: BackgroundTasks):

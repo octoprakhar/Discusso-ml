@@ -4,10 +4,15 @@ name: CI/CD Pipeline
 on:
     push:
         branches: ["main"] ## Everytime I push to main branch
+    pull_request:
+        branches: ["main"]
 
 jobs:
-    test-backend:
+    test-and-report:
       runs-on: ubuntu-latest
+      permissions:
+        pull-requests: write
+        contents: read
       steps:
         - name: Checkout code
           uses: actions/checkout@v4
@@ -22,15 +27,22 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
 
-        - name: Run Pytest
+        - name: Run Pytest with Coverage
           env:
             SUPABASE_URL: "https://fake.supabase.co"
             SUPABASE_SERVICE_ROLE_KEY: "fake_key"
             ML_INTERNAL_SECRET: ${{secrets.ML_INTERNAL_SECRET}}
-          run: pytest
+          run: pytest --cov=app --cov=ml --cov-report=xml --cov-fail-under=80
+        
+        - name: Upload Coverage Results
+          if: always()
+          uses: MishaKav/pytest-coverage-comment@v1.1.53
+          with:
+            pytest-coverage-path: ./coverage.xml
+            github-token: ${{secrets.GITHUB_TOKEN}}
 
     build-and-push:
-        needs: test-backend
+        needs: test-and-report
         runs-on: ubuntu-latest
     
         steps:

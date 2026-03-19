@@ -1,0 +1,7 @@
+[run]
+omit =
+    ml/entity/*
+    ml/components/*
+    ml/pipelines/*/training_pipeline.py
+    # Ignore __init__ files
+    */__init__.py
