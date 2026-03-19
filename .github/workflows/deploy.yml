@@ -13,6 +13,7 @@ jobs:
       permissions:
         pull-requests: write
         contents: read
+        checks: write
       steps:
         - name: Checkout code
           uses: actions/checkout@v4
@@ -32,7 +33,7 @@ jobs:
             SUPABASE_URL: "https://fake.supabase.co"
             SUPABASE_SERVICE_ROLE_KEY: "fake_key"
             ML_INTERNAL_SECRET: ${{secrets.ML_INTERNAL_SECRET}}
-          run: pytest --cov=app --cov=ml --cov-report=xml --cov-fail-under=80
+          run: pytest --cov=app --cov=ml --cov-report=xml --cov-fail-under=80 | tee pytest-coverage.txt
         
         - name: Upload Coverage Results
           if: always()
